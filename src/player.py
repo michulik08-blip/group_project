@@ -33,3 +33,24 @@ class Player:
                 self.is_jumping = True
                 self.is_crouching = False
                 self.vel_y = -15
+                
+        def crouch(self, active: bool):
+                if not self.is_jumping:
+                    self.is_crouching = active
+        
+        def update(self):
+            self.rect.centerx = self.lanes_x[self.current_lane]
+    
+            target_height = self.crouch_height if self.is_crouching else self.normal_height
+            if self.rect.height != target_height:
+                bottom = self.rect.bottom
+                self.rect.height = target_height
+                self.rect.bottom = bottom
+    
+            if self.is_jumping:
+                self.rect.y += self.vel_y
+                self.vel_y += 0.8
+                if self.rect.bottom >= self.ground_y:
+                    self.rect.bottom = self.ground_y
+                    self.is_jumping = False
+                    self.vel_y = 0
