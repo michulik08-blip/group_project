@@ -1,4 +1,5 @@
 import pygame
+from src.utils import load_sprite
 
 class Player:
     def __init__(self, lanes_x: list[int], ground_y: int):
@@ -18,3 +19,17 @@ class Player:
         self.vel_y = 0
         self.is_jumping = False
         self.is_crouching = False
+        
+        self.sprite = load_sprite("/textures/player.png", (self.width, self.height), (50, 200, 100))
+        
+        def move_left(self):
+                self.current_lane = max(0, self.current_lane - 1)
+        
+        def move_right(self):
+            self.current_lane = min(len(self.lanes_x) - 1, self.current_lane + 1)
+    
+        def jump(self):
+            if not self.is_jumping:
+                self.is_jumping = True
+                self.is_crouching = False
+                self.vel_y = -15
