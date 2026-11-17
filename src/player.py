@@ -41,14 +41,12 @@ class Player:
     def update(self):
         self.rect.centerx = self.lanes_x[self.current_lane]
 
-        # Обработка высоты при приседе
         target_height = self.crouch_height if self.is_crouching else self.normal_height
         if self.rect.height != target_height:
             bottom = self.rect.bottom
             self.rect.height = target_height
             self.rect.bottom = bottom
 
-        # Физика прыжка
         if self.is_jumping:
             self.rect.y += self.vel_y
             self.vel_y += 0.8  # Гравитация
