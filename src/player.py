@@ -54,3 +54,6 @@ class Player:
                     self.rect.bottom = self.ground_y
                     self.is_jumping = False
                     self.vel_y = 0
+                    
+        def draw(self, screen: pygame.Surface):
+                pygame.draw.rect(screen, self.sprite, self.rect, border_radius=6)
