@@ -25,7 +25,11 @@ class Game:
         self.highscore = load_highscore()
         self.reset_game()
 
+        self.highscore = load_highscore()
+        self.reset_game()
+
         self.background = pygame.transform.scale(pygame.image.load('textures/background.png').convert(), (SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.bg_y = 0.0
 
     def reset_game(self):
         self.player = Player(LANES_X, GROUND_Y)
@@ -69,6 +73,8 @@ class Game:
         self.speed = min(MAX_SPEED, self.speed + SPEED_INCREMENT)
         self.score += self.speed * 0.05
 
+        self.bg_y = (self.bg_y + self.speed) % SCREEN_HEIGHT
+
         self.player.update()
         self.spawner.update(self.speed, self.obstacles, self.coins)
 
@@ -87,6 +93,7 @@ class Game:
                 self.coins.remove(coin)
             elif coin.is_offscreen():
                 self.coins.remove(coin)
+
 
     def _check_collision(self, obs) -> bool:
         if obs.lane != self.player.current_lane:
@@ -110,7 +117,9 @@ class Game:
             save_highscore(self.highscore)
 
     def draw(self):
-        self.screen.blit(self.background, (0, 0))
+        y = self.bg_y
+        self.screen.blit(self.background, (0, y - SCREEN_HEIGHT))
+        self.screen.blit(self.background, (0, y))
 
         for coin in self.coins:
             coin.draw(self.screen)
