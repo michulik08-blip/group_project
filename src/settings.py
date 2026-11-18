@@ -1,3 +1,5 @@
+import pygame
+
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 700
 FPS = 60
@@ -11,7 +13,7 @@ COLOR_LINE = (90, 95, 110)
 COLOR_PLAYER = (50, 200, 100)
 COLOR_TRAIN = (220, 65, 65)
 COLOR_BARRIER = (230, 140, 40)
-COLOR_COIN = (255, 215, 0)
+COLOR_COIN = pygame.image.load('textures/coin.png').convert_alpha()
 COLOR_TEXT = (240, 240, 240)
 
 INITIAL_SPEED = 7.0
