@@ -1,5 +1,6 @@
 import sys
 import pygame
+
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, FPS, LANES_X, GROUND_Y,
     INITIAL_SPEED, MAX_SPEED, SPEED_INCREMENT,
@@ -23,6 +24,8 @@ class Game:
 
         self.highscore = load_highscore()
         self.reset_game()
+
+        self.background = pygame.image.load('textures/background.png')
 
     def reset_game(self):
         self.player = Player(LANES_X, GROUND_Y)
@@ -107,7 +110,7 @@ class Game:
             save_highscore(self.highscore)
 
     def draw(self):
-        self.screen.fill(COLOR_BG)
+        self.screen.blit(self.background, (0, 0))
 
         road_rect = pygame.Rect(80, 0, SCREEN_WIDTH - 160, SCREEN_HEIGHT)
         pygame.draw.rect(self.screen, COLOR_ROAD, road_rect)
