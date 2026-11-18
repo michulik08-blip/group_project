@@ -8,9 +8,9 @@ class Player:
         self.current_lane = 1
         self.ground_y = ground_y
 
-        self.normal_height = 60
-        self.crouch_height = 30
-        self.width = 40
+        self.normal_height = 110   
+        self.crouch_height = 60 
+        self.width = 80        
         self.height = self.normal_height
 
         self.rect = pygame.Rect(0, 0, self.width, self.height)
@@ -20,7 +20,9 @@ class Player:
         self.vel_y = 0
         self.is_jumping = False
         self.is_crouching = False
-        self.sprite = load_sprite("assets/player.png", (self.width, self.height), (50, 200, 100))
+
+        self.sprite_normal = load_sprite("textures/player.png", (self.width, self.normal_height), (50, 200, 100))
+        self.sprite_crouch = load_sprite("textures/player.png", (self.width, self.crouch_height), (50, 200, 100))
 
     def move_left(self):
         self.current_lane = max(0, self.current_lane - 1)
@@ -56,4 +58,5 @@ class Player:
                 self.vel_y = 0
 
     def draw(self, screen: pygame.Surface):
-        pygame.draw.rect(screen, (50, 200, 100), self.rect, border_radius=6)
+        current_sprite = self.sprite_crouch if self.is_crouching else self.sprite_normal
+        screen.blit(current_sprite, self.rect)

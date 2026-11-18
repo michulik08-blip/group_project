@@ -25,7 +25,7 @@ class Game:
         self.highscore = load_highscore()
         self.reset_game()
 
-        self.background = pygame.image.load('textures/background.png')
+        self.background = pygame.transform.scale(pygame.image.load('textures/background.png').convert(), (SCREEN_WIDTH, SCREEN_HEIGHT))
 
     def reset_game(self):
         self.player = Player(LANES_X, GROUND_Y)
@@ -112,16 +112,18 @@ class Game:
     def draw(self):
         self.screen.blit(self.background, (0, 0))
 
-        road_rect = pygame.Rect(80, 0, SCREEN_WIDTH - 160, SCREEN_HEIGHT)
-        pygame.draw.rect(self.screen, COLOR_ROAD, road_rect)
-        for x in [225, 375]:
-            pygame.draw.line(self.screen, COLOR_LINE, (x, 0), (x, SCREEN_HEIGHT), 4)
-
         for coin in self.coins:
             coin.draw(self.screen)
+
         for obs in self.obstacles:
-            obs.draw(self.screen)
+            if obs.obs_type != "barrier_high":
+                obs.draw(self.screen)
+
         self.player.draw(self.screen)
+
+        for obs in self.obstacles:
+            if obs.obs_type == "barrier_high":
+                obs.draw(self.screen)
 
         score_surf = self.font.render(f"Score: {int(self.score)}", True, COLOR_TEXT)
         coins_surf = self.font.render(f"Coins: {self.coins_collected}", True, COLOR_TEXT)
