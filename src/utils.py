@@ -21,6 +21,9 @@ def load_sprite(path: str, size: tuple[int, int], fallback_color: tuple[int, int
     try:
         if os.path.exists(path):
             img = pygame.image.load(path).convert_alpha()
+            
+            img.set_colorkey((230, 140, 40))
+            
             return pygame.transform.scale(img, size)
     except pygame.error:
         pass
