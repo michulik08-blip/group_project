@@ -4,7 +4,7 @@ import pygame
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, FPS, LANES_X, GROUND_Y,
     INITIAL_SPEED, MAX_SPEED, SPEED_INCREMENT,
-    COLOR_BG, COLOR_ROAD, COLOR_LINE, COLOR_TEXT
+    COLOR_TEXT
 )
 from src.player import Player
 from src.obstacles import Spawner
@@ -155,6 +155,12 @@ class Game:
 
         pygame.display.flip()
 
+    def bg_music(self):
+        pygame.mixer.init()
+        pygame.mixer.music.load("music/background.mp3")
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play(-1)
+
     def quit_game(self):
         pygame.quit()
         sys.exit()
@@ -170,7 +176,9 @@ class Game:
 if __name__ == "__main__":
     try:
         game = Game()
+        game.bg_music()
         game.run()
+
     except Exception as e:
         print(f"Critical error prevented: {e}")
         pygame.quit()
